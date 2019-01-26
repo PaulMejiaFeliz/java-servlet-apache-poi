@@ -19,7 +19,7 @@ public class ErrorHandlerServlet extends BaseServlet {
 	@Override
 	protected Object handleGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String, String> data = new HashMap<String, String>();
-		
+		response.setStatus(400);
         Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
         
         try {

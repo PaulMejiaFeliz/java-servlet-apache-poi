@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -130,12 +129,47 @@ public class ExcelDataBaseHelper {
 			Map<String, String> record = new HashMap<String, String>();
 			for (String property: model.getProperties()) {
 				Cell cell = row.getCell(columnsIndex.get(property));
-	            record.put(property, cell.getRichStringCellValue().getString());
+				if (cell != null) {					
+					record.put(property, cell.getRichStringCellValue().getString());
+				} else {
+					record.put(property, "");
+				}
 			}
 			
 			records.add(record);
 		}
-		
+
 		return records;
+	}
+
+	public BaseModel fetchRecord(BaseModel model, int rowId) throws Exception {
+		
+		XSSFSheet sheet = workbook.getSheet(model.getTable());
+
+		XSSFRow header = sheet.getRow(0);
+		
+		Map<String, Integer> columnsIndex = new HashMap<String, Integer>();
+		Iterator<Cell> cells = header.cellIterator();
+		int cellIndex = 0;
+		while (cells.hasNext()) {
+			Cell cell = cells.next();
+			columnsIndex.put(cell.getStringCellValue(), cellIndex++);
+		}
+		
+		XSSFRow row = sheet.getRow(rowId);
+		
+		if (row == null) {
+			throw new Exception("Not Found");
+		}
+
+		Map<String, String> record = new HashMap<String, String>();
+		for (String property: model.getProperties()) {
+			Cell cell = row.getCell(columnsIndex.get(property));
+            record.put(property, cell.getRichStringCellValue().getString());
+		}
+		
+		model.assign(record);
+		
+		return model;
 	}
 }
