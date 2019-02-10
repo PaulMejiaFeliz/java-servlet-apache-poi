@@ -56,6 +56,7 @@ public class BaseModel {
 			try {
 				switch (field.getType().getName()) {
 					case "java.lang.String":
+                                        case "java.util.Date":
 						field.set(this, record.get(field.getName()));
 						break;
 					case "int":

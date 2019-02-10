@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>The Store</title>
+</head>
+<body>
+    <link type="text/css" rel="stylesheet" href="style/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="style/bootstrap-vue.css"/>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="js/bootstrap-vue.js"></script>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <h3>The Store</h3>
+            </div>
+            <div class="row">
+                <b-form @submit="saveProduct" @reset="resetForm">
+                    <b-form-group id="titleGroup"
+                        label="Title:"
+                        label-for="titleinput"
+                    >
+                        <b-form-input id="titleinput"
+                            type="text"
+                            v-model="form.title"
+                            required
+                            placeholder="Banana"
+                        >
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group id="priceGroup"
+                        label="Price"
+                        label-for="priceinput"
+                    >
+                        <b-form-input id="priceinput"
+                            type="text"
+                            v-model="form.price"
+                            required
+                        >
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group id="quantitygroup"
+                        label="Quantity"
+                        label-for="quantityinput"
+                    >
+                        <b-form-input id="quantityinput"
+                            type="number"
+                            v-model="form.quantity"
+                            required
+                        >
+                        </b-form-input>
+                    </b-form-group>
+                    <b-button type="submit" variant="primary">Submit</b-button>
+                    <b-button type="reset" variant="danger">Reset</b-button>
+                </b-form>
+            </div>
+            <div class="row">
+                <b-table striped hover :items="products" :fields="fields">
+                    <template slot="edit_product" slot-scope="row">
+                        <b-button size="sm" @click.stop="getProduct(row.item, $event.target)" class="mr-2">Edit</b-button>
+                    </template>
+                </b-table>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

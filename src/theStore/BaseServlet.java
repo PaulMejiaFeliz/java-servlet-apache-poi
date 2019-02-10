@@ -16,7 +16,7 @@ import theStore.models.BaseModel;
 /**
  * Servlet implementation class TheStoreMain
  */
-@WebServlet("/api-info")
+@WebServlet("/v1")
 public class BaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
